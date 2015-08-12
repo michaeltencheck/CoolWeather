@@ -11,7 +11,7 @@ import com.example.test.coolweather.model.Province;
  * Created by test on 8/12/2015.
  */
 public class Utility {
-    private synchronized static boolean handleProvinceResponse
+    public synchronized static boolean handleProvinceResponse
             (CoolWeatherDB coolWeatherDB,String response) {
         if (!TextUtils.isEmpty(response)) {
             String[] allProvinces = response.split(",");
@@ -29,7 +29,7 @@ public class Utility {
         return false;
     }
 
-    private synchronized static boolean handleCityResponse
+    public synchronized static boolean handleCityResponse
             (CoolWeatherDB coolWeatherDB, String response, int province_id) {
         if (!TextUtils.isEmpty(response)) {
             String[] allCitys = response.split(",");
@@ -48,7 +48,7 @@ public class Utility {
         return false;
     }
 
-    private synchronized static boolean handleCountyResponse
+    public synchronized static boolean handleCountyResponse
             (CoolWeatherDB coolWeatherDB, String response, int city_id) {
         if (!TextUtils.isEmpty(response)) {
             String[] allCountys = response.split(",");

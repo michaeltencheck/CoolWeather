@@ -3,6 +3,7 @@ package com.example.test.coolweather.activity;
 import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,12 +13,16 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.test.coolweather.R;
 import com.example.test.coolweather.db.CoolWeatherDB;
 import com.example.test.coolweather.model.City;
 import com.example.test.coolweather.model.County;
 import com.example.test.coolweather.model.Province;
+import com.example.test.coolweather.utility.HttpCallbackListener;
+import com.example.test.coolweather.utility.HttpUtil;
+import com.example.test.coolweather.utility.Utility;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,13 +71,126 @@ public class ChooseAreaActivity extends AppCompatActivity {
     }
 
     private void queryProvinces() {
-        
+        provinceList = coolWeatherDB.loadPorvince();
+        if (provinceList.size() > 0) {
+            dataList.clear();
+            for (Province province : provinceList) {
+                dataList.add(province.getProvince_name());
+            }
+            adapter.notifyDataSetChanged();
+            listView.setSelection(0);
+            textView.setText("中国");
+            currentLevel = PROVINCE_LEVEL;
+        } else {
+            queryFromServer(null, "province");
+        }
+    }
+
+    private void queryFromServer(final String code, final String type) {
+        String address;
+        if (!TextUtils.isEmpty(code)) {
+            address = "http://www.weather.com.cn/data/list3/city" + code + ".xml";
+        } else {
+            address = "http://www.weather.com.cn/data/list3/city.xml";
+        }
+        showProgressDialog();
+        HttpUtil.sendHttpRequest(address, new HttpCallbackListener() {
+            @Override
+            public void onFinish(String s) {
+                boolean result = false;
+                if ("province".equals(type)) {
+                    result = Utility.handleProvinceResponse(coolWeatherDB, s);
+                }else if ("city".equals(type)) {
+                    result = Utility.handleCityResponse(coolWeatherDB, s, seletedProvince.getId());
+                }else if ("county".equals(type)) {
+                    result = Utility.handleCountyResponse(coolWeatherDB, s, seleterCity.getId());
+                }
+                if (result) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            closeProgressDialog();
+                            if ("province".equals(type)) {
+                                queryProvinces();
+                            }else if ("city".equals(type)) {
+                                queryCitys();
+                            }else if ("county".equals(type)) {
+                                queryCounties();
+                            }
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        closeProgressDialog();
+                        Toast.makeText(ChooseAreaActivity.this,
+                                "loading false", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
+    }
+
+    private void closeProgressDialog() {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+    }
+
+    private void showProgressDialog() {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(ChooseAreaActivity.this);
+            progressDialog.setMessage("Loading");
+            progressDialog.setCanceledOnTouchOutside(false);
+        }
+        progressDialog.show();
     }
 
     private void queryCounties() {
+        countyList = coolWeatherDB.loadCounty(seleterCity.getId());
+        if (countyList.size() > 0) {
+            dataList.clear();
+            for (County county : countyList) {
+                dataList.add(county.getCounty_name());
+            }
+            adapter.notifyDataSetChanged();
+            listView.setSelection(0);
+            textView.setText(seleterCity.getCity_name());
+            currentLevel = COUNTY_LEVEL;
+        } else {
+            queryFromServer(seleterCity.getCity_code(), "county");
+        }
     }
 
     private void queryCitys() {
+        cityList = coolWeatherDB.loadCity(seletedProvince.getId());
+        if (cityList.size() > 0) {
+            dataList.clear();
+            for (City city : cityList) {
+                dataList.add(city.getCity_name());
+            }
+            adapter.notifyDataSetChanged();
+            listView.setSelection(0);
+            textView.setText(seletedProvince.getProvince_name());
+            currentLevel = CITY_LEVEL;
+        } else {
+            queryFromServer(seletedProvince.getProvince_code(), "city");
+        }
+    }
+
+    public void onBackPressed() {
+        if (currentLevel == COUNTY_LEVEL) {
+            queryCitys();
+        }else if (currentLevel == CITY_LEVEL) {
+            queryProvinces();
+        } else {
+            finish();
+        }
     }
 
     @Override
