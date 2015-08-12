@@ -27,7 +27,7 @@ public class CoolWeatherDB {
         db = coolWeatherOpenHelper.getWritableDatabase();
     }
 
-    private synchronized static CoolWeatherDB getInstance(Context context) {
+    public synchronized static CoolWeatherDB getInstance(Context context) {
         if (coolWeatherDB == null) {
             coolWeatherDB = new CoolWeatherDB(context);
         }
