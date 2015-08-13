@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/city_seleted_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="40sp"
+        android:text="bbb"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/post_time_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textSize="30sp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="15dp"
+            android:text="bbb"/>
+
+        <LinearLayout
+            android:id="@+id/weather_info_layout"
+            android:layout_marginTop="60dp"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/current_date_textView"
+                android:layout_marginTop="60dp"
+                android:gravity="center"
+                android:textSize="30sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="bbb"/>
+
+            <TextView
+                android:id="@+id/weather_info_textView"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:textSize="80sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="bbb"/>
+
+            <LinearLayout
+                android:id="@+id/tem_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/low_tem_textView"
+                    android:layout_marginTop="30dp"
+                    android:textSize="40sp"
+                    android:layout_marginLeft="100dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="bbb"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginLeft="5dp"
+                    android:textSize="40sp"
+                    android:text="~"/>
+
+                <TextView
+                    android:id="@+id/high_tem_textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:textSize="40sp"
+                    android:layout_marginLeft="5dp"
+                    android:text="bbb"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+</LinearLayout>
