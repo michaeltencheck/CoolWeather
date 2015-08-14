@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -9,8 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textSize="40sp"
-        android:text="bbb"/>
+        android:textSize="40sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -24,8 +24,7 @@
             android:layout_alignParentRight="true"
             android:textSize="30sp"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="15dp"
-            android:text="bbb"/>
+            android:layout_marginRight="15dp" />
 
         <LinearLayout
             android:id="@+id/weather_info_layout"
@@ -40,8 +39,7 @@
                 android:gravity="center"
                 android:textSize="30sp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="bbb"/>
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/weather_info_textView"
@@ -49,8 +47,7 @@
                 android:gravity="center"
                 android:textSize="80sp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="bbb"/>
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:id="@+id/tem_layout"
@@ -63,8 +60,7 @@
                     android:textSize="40sp"
                     android:layout_marginLeft="100dp"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="bbb"/>
+                    android:layout_height="wrap_content" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -80,8 +76,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
                     android:textSize="40sp"
-                    android:layout_marginLeft="5dp"
-                    android:text="bbb"/>
+                    android:layout_marginLeft="5dp" />
 
             </LinearLayout>
 
