@@ -1,5 +1,8 @@
 package com.example.test.coolweather.utility;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.example.test.coolweather.db.CoolWeatherDB;
@@ -7,10 +10,51 @@ import com.example.test.coolweather.model.City;
 import com.example.test.coolweather.model.County;
 import com.example.test.coolweather.model.Province;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Created by test on 8/12/2015.
  */
 public class Utility {
+    public static void handleWeatherResponse(Context context, String response) {
+        try {
+            JSONObject jsonObject = new JSONObject(response);
+            JSONObject weatherInfo = jsonObject.getJSONObject("weatherinfo");
+            String city_name = weatherInfo.getString("city");
+            String weather_code = weatherInfo.getString("cityid");
+            String high_temp = weatherInfo.getString("temp1");
+            String low_temp = weatherInfo.getString("temp2");
+            String weather_des = weatherInfo.getString("weather");
+            String public_time = weatherInfo.getString("ptime");
+            saveWeatherInfo(context,city_name,weather_code,
+                    high_temp,low_temp,weather_des,public_time);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void saveWeatherInfo
+            (Context context, String city_name, String weather_code,
+             String high_temp, String low_temp, String weather_des, String public_time) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy年m月d日", Locale.CHINA);
+        SharedPreferences.Editor editor =
+                PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putBoolean("city_seleted", true);
+        editor.putString("city_name", city_name);
+        editor.putString("weather_code", weather_code);
+        editor.putString("high_temp", high_temp);
+        editor.putString("low_temp", low_temp);
+        editor.putString("weather_des", weather_des);
+        editor.putString("public_time", public_time);
+        editor.putString("current_data", sdf.format(new Date()));
+        editor.commit();
+    }
+
     public synchronized static boolean handleProvinceResponse
             (CoolWeatherDB coolWeatherDB,String response) {
         if (!TextUtils.isEmpty(response)) {
