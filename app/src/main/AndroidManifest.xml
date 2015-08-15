@@ -26,15 +26,11 @@
         </activity>
 
         <service
-            android:name=".service.AutoUpdateWeather"
-            android:enabled="true"
-            android:exported="true" >
+            android:name=".service.AutoUpdateWeather">
         </service>
 
         <receiver
-            android:name=".receiver.AutoUpdaReceiver"
-            android:enabled="true"
-            android:exported="true" >
+            android:name=".receiver.AutoUpdaReceiver">
         </receiver>
     </application>
 

@@ -71,7 +71,7 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         weather_info_layout.setVisibility(View.VISIBLE);
         city_name.setVisibility(View.VISIBLE);
         Intent intent = new Intent(this, AutoUpdateWeather.class);
-        startActivity(intent);
+        startService(intent);
     }
 
     private void queryWeatherCode(String countyCode) {

@@ -43,7 +43,7 @@ public class AutoUpdateWeather extends Service {
 
             @Override
             public void onError(Exception e) {
-
+                e.printStackTrace();
             }
         });
     }
