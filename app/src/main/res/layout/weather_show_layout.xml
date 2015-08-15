@@ -5,12 +5,35 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/city_seleted_textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:textSize="40sp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/switch_city_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="city"/>
+
+        <TextView
+
+            android:id="@+id/city_seleted_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            tools:text="bbb"
+            android:textSize="40sp" />
+
+        <Button
+            android:id="@+id/refresh_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="refresh"/>
+
+    </RelativeLayout>
+
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -23,8 +46,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:textSize="30sp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="15dp" />
+            android:layout_marginTop="80dp"
+            android:layout_marginRight="30dp" />
 
         <LinearLayout
             android:id="@+id/weather_info_layout"

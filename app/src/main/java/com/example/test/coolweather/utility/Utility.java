@@ -51,7 +51,7 @@ public class Utility {
         editor.putString("low_temp", low_temp);
         editor.putString("weather_des", weather_des);
         editor.putString("public_time", public_time);
-        editor.putString("current_data", sdf.format(new Date()));
+        editor.putString("current_date", sdf.format(new Date()));
         editor.commit();
     }
 
