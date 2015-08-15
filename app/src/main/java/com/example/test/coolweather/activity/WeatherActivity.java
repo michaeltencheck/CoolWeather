@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.test.coolweather.R;
+import com.example.test.coolweather.service.AutoUpdateWeather;
 import com.example.test.coolweather.utility.HttpCallbackListener;
 import com.example.test.coolweather.utility.HttpUtil;
 import com.example.test.coolweather.utility.Utility;
@@ -69,7 +70,8 @@ public class WeatherActivity extends AppCompatActivity implements View.OnClickLi
         temp2.setText(spf.getString("high_temp", ""));
         weather_info_layout.setVisibility(View.VISIBLE);
         city_name.setVisibility(View.VISIBLE);
-
+        Intent intent = new Intent(this, AutoUpdateWeather.class);
+        startActivity(intent);
     }
 
     private void queryWeatherCode(String countyCode) {
