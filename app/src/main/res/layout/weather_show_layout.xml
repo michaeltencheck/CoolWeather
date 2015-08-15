@@ -81,7 +81,7 @@
                     android:id="@+id/low_tem_textView"
                     android:layout_marginTop="30dp"
                     android:textSize="40sp"
-                    android:layout_marginLeft="100dp"
+                    android:layout_marginLeft="280dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
