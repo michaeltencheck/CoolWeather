@@ -4,6 +4,16 @@ package com.example.test.myweather.database;
  * Created by test on 8/16/2015.
  */
 public class Province {
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     private String province_name;
     private String province_code;
 
