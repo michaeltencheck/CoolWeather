@@ -55,4 +55,64 @@ public class MyWeatherDB {
         return list;
     }
 
+    public void saveCity(City city) {
+        if (city != null) {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("city_name", city.getCity_name());
+            contentValues.put("city_code", city.getCity_code());
+            contentValues.put("province_id", city.getProvince_id());
+            sqLiteDatabase.insert("City", null, contentValues);
+        }
+    }
+
+    public List<City> loadCity(int province_id) {
+        List<City> list = new ArrayList<City>();
+        Cursor cursor = sqLiteDatabase.query("City", null, "province_id = ?",
+                new String[]{String.valueOf(province_id)}, null, null, null);
+        if (cursor.moveToFirst()) {
+            do {
+                City city = new City();
+                city.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                city.setCity_name(cursor.getString(cursor.getColumnIndex("city_name")));
+                city.setCity_code(cursor.getString(cursor.getColumnIndex("city_code")));
+                city.setProvince_id(province_id);
+                list.add(city);
+            } while (cursor.moveToNext());
+        }
+        if (cursor != null) {
+            cursor.close();
+        }
+        return list;
+    }
+
+    public void saveCounty(County county) {
+        if (county != null) {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("county_name", county.getCounty_name());
+            contentValues.put("county_code", county.getCounty_code());
+            contentValues.put("city_id", county.getCity_id());
+            sqLiteDatabase.insert("county", null, contentValues);
+        }
+    }
+
+    public List<County> loadCounty(int city_id) {
+        List<County> list = new ArrayList<County>();
+        Cursor cursor = sqLiteDatabase.query("County", null, "city_id = ?",
+                new String[]{String.valueOf(city_id)}, null, null, null);
+        if (cursor.moveToFirst()) {
+            do {
+                County county = new County();
+                county.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                county.setCounty_name(cursor.getString(cursor.getColumnIndex("county_name")));
+                county.setCounty_code(cursor.getString(cursor.getColumnIndex("county_code")));
+                county.setCity_id(city_id);
+                list.add(county);
+            }while (cursor.moveToNext());
+        }
+        if (cursor != null) {
+            cursor.close();
+        }
+        return list;
+    }
+
 }
