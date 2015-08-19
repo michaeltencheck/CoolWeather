@@ -23,7 +23,7 @@ public class MyWeatherDB {
         sqLiteDatabase = myWeatherOpenHelper.getWritableDatabase();
     }
 
-    private synchronized static MyWeatherDB getInstance(Context context) {
+    public synchronized static MyWeatherDB getInstance(Context context) {
         myWeatherDB = new MyWeatherDB(context);
         return myWeatherDB;
     }
