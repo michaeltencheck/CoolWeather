@@ -44,7 +44,7 @@ public class Utility {
              String high_temp, String low_temp, String weather_des, String publish_time) {
         SharedPreferences.Editor editor =
                 PreferenceManager.getDefaultSharedPreferences(context).edit();
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年M月d日", Locale.CHINA);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年M月d日 HH:mm:ss", Locale.CHINA);
         editor.putBoolean("seleted_county", true);
         editor.putString("current_date", simpleDateFormat.format(new Date()));
         editor.putString("city", city);
