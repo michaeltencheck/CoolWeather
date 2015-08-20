@@ -1,6 +1,7 @@
 package com.example.test.myweather.activity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -46,6 +47,7 @@ public class AreaActivity extends AppCompatActivity implements AdapterView.OnIte
     
     private int currentLevel;
     private ProgressDialog progressDialog;
+    private County seletedCounty;
 
 
     @Override
@@ -99,6 +101,12 @@ public class AreaActivity extends AppCompatActivity implements AdapterView.OnIte
         }else if (currentLevel == LEVEL_CITY) {
             seletedCity = cityList.get(position);
             queryCounty();
+        }else if (currentLevel == LEVEL_COUNTY) {
+            seletedCounty = countyList.get(position);
+            Intent intent = new Intent(this, WeatherInfoActivity.class);
+            intent.putExtra("county_name", seletedCounty.getCounty_name());
+            intent.putExtra("county_code", seletedCounty.getCounty_code());
+            startActivity(intent);
         }
     }
 

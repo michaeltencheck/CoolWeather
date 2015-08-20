@@ -1,13 +1,23 @@
 package com.example.test.myweather.activity;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.test.myweather.R;
+import com.example.test.myweather.httputil.CallBackListener;
+import com.example.test.myweather.httputil.HttpUtil;
+import com.example.test.myweather.httputil.Utility;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -21,6 +31,8 @@ public class WeatherInfoActivity extends AppCompatActivity {
     private TextView weatherInfo_dec;
     private TextView temp_show;
     private Date currentDate;
+    private Intent intent;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +47,81 @@ public class WeatherInfoActivity extends AppCompatActivity {
         weatherInfo_dec = (TextView) findViewById(R.id.weather_des_textView);
         temp_show = (TextView) findViewById(R.id.temp_show_textView);
 
+        intent = getIntent();
+        String county_name = intent.getStringExtra("county_name");
+        String county_code = intent.getStringExtra("county_code");
+        title.setText(county_name);
+        queryWeatherCode(county_code);
+    }
+
+    private void queryWeatherInfo(String weatherCode) {
+        String weatherInfo_address = "http://www.weather.com.cn/data/cityinfo/" + weatherCode + ".html";
+        HttpUtil.sendRequest(weatherInfo_address, new CallBackListener() {
+            @Override
+            public void onFinish(String response) {
+//                showProgress();
+                Utility.handleWeatherInfo(WeatherInfoActivity.this, response);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+//                        closeProgress();
+                        SharedPreferences weatherInfo = PreferenceManager
+                                .getDefaultSharedPreferences(WeatherInfoActivity.this);
+                        current_date.setText(weatherInfo.getString("current_date", ""));
+                        publish_time.setText(weatherInfo.getString("publish_time", "") + " 发布");
+                        weatherInfo_dec.setText(weatherInfo.getString("weather_des", ""));
+                        temp_show.setText(weatherInfo.getString("low_temp", "")
+                                + " ~ " + weatherInfo.getString("high_temp", ""));
+                    }
+                });
+            }
+
+            @Override
+            public void onError(Exception e) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        closeProgress();
+                        Toast.makeText(WeatherInfoActivity.this, "加载失败", Toast.LENGTH_LONG).show();
+                    }
+                });
+            }
+        });
+    }
+
+    private void queryWeatherCode(String county_code) {
+        String address = "http://www.weather.com.cn/data/list3/city" + county_code + ".xml";
+        HttpUtil.sendRequest(address, new CallBackListener() {
+            @Override
+            public void onFinish(String response) {
+                if (response != null) {
+                    String[] array = response.split("\\|");
+                    String weatherCode = array[1];
+//                    Log.d("bbbbb", weatherCode);
+                    queryWeatherInfo(weatherCode);
+                }
+            }
+
+            @Override
+            public void onError(Exception e) {
+
+            }
+        });
+    }
+
+    private void closeProgress() {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+    }
+
+    private void showProgress() {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(this);
+            progressDialog.setMessage("正在加载");
+            progressDialog.setCanceledOnTouchOutside(false);
+        }
+        progressDialog.show();
     }
 
     @Override
@@ -57,5 +144,10 @@ public class WeatherInfoActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }

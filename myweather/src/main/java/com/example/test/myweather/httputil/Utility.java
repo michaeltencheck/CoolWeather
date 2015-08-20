@@ -13,11 +13,15 @@ import com.example.test.myweather.database.Province;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 /**
  * Created by test on 8/18/2015.
  */
 public class Utility {
-    public static boolean handleWeatherInfo(Context context,String response) {
+    public static void handleWeatherInfo(Context context,String response) {
         if (!TextUtils.isEmpty(response)) {
             try {
                 JSONObject jsonObject = new JSONObject(response);
@@ -32,16 +36,16 @@ public class Utility {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            return true;
         }
-        return false;
     }
 
-    private static void saveWeatherInfo
+    public static void saveWeatherInfo
             (Context context, String city, String cityId,
              String high_temp, String low_temp, String weather_des, String publish_time) {
         SharedPreferences.Editor editor =
                 PreferenceManager.getDefaultSharedPreferences(context).edit();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年M月d日", Locale.CHINA);
+        editor.putString("current_date", simpleDateFormat.format(new Date()));
         editor.putString("city", city);
         editor.putString("cityId", cityId);
         editor.putString("high_temp", high_temp);

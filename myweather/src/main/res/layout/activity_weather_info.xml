@@ -46,7 +46,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="100dp"
             android:layout_marginRight="30dp"
             android:textSize="38sp"
             tools:text="abc"/>
@@ -58,7 +58,7 @@
             tools:text="abc"
             android:textSize="48sp"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="100dp"/>
+            android:layout_marginTop="300dp"/>
 
         <TextView
             android:id="@+id/weather_des_textView"
@@ -70,7 +70,7 @@
 
         <TextView
             android:id="@+id/temp_show_textView"
-            android:layout_marginTop="350dp"
+            android:layout_marginTop="420dp"
             android:layout_centerHorizontal="true"
             android:textSize="48sp"
             tools:text="aaa"
