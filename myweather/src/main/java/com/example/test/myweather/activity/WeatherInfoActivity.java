@@ -19,6 +19,7 @@ import com.example.test.myweather.R;
 import com.example.test.myweather.httputil.CallBackListener;
 import com.example.test.myweather.httputil.HttpUtil;
 import com.example.test.myweather.httputil.Utility;
+import com.example.test.myweather.service.AutoUpdateService;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -78,6 +79,8 @@ public class WeatherInfoActivity extends AppCompatActivity implements View.OnCli
                         weatherInfo_dec.setText(weatherInfo.getString("weather_des", ""));
                         temp_show.setText(weatherInfo.getString("low_temp", "")
                                 + " ~ " + weatherInfo.getString("high_temp", ""));
+                        Intent intent = new Intent(WeatherInfoActivity.this, AutoUpdateService.class);
+                        startService(intent);
                     }
                 });
             }

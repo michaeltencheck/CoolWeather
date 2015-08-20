@@ -11,8 +11,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".activity.AreaActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:label="@string/title_activity_area" >
+            android:label="@string/title_activity_area"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,9 +21,17 @@
         </activity>
         <activity
             android:name=".activity.WeatherInfoActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:label="@string/title_activity_weather_info" >
+            android:label="@string/title_activity_weather_info"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
         </activity>
+
+        <service
+            android:name=".service.AutoUpdateService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+
+        <receiver android:name=".receiver.AutoUpdateReceiver"/>
     </application>
 
 </manifest>
