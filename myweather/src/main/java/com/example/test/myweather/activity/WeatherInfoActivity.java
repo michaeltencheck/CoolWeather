@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,7 +23,7 @@ import com.example.test.myweather.httputil.Utility;
 import java.text.DateFormat;
 import java.util.Date;
 
-public class WeatherInfoActivity extends AppCompatActivity {
+public class WeatherInfoActivity extends AppCompatActivity implements View.OnClickListener{
     private TextView title;
     private Button switch_city;
     private Button refresh;
@@ -30,8 +31,7 @@ public class WeatherInfoActivity extends AppCompatActivity {
     private TextView current_date;
     private TextView weatherInfo_dec;
     private TextView temp_show;
-    private Date currentDate;
-    private Intent intent;
+    private String county_code;
     private ProgressDialog progressDialog;
 
     @Override
@@ -47,11 +47,14 @@ public class WeatherInfoActivity extends AppCompatActivity {
         weatherInfo_dec = (TextView) findViewById(R.id.weather_des_textView);
         temp_show = (TextView) findViewById(R.id.temp_show_textView);
 
-        intent = getIntent();
+        Intent intent = getIntent();
         String county_name = intent.getStringExtra("county_name");
-        String county_code = intent.getStringExtra("county_code");
+        county_code = intent.getStringExtra("county_code");
         title.setText(county_name);
         queryWeatherCode(county_code);
+
+        switch_city.setOnClickListener(this);
+        refresh.setOnClickListener(this);
     }
 
     private void queryWeatherInfo(String weatherCode) {
@@ -149,5 +152,17 @@ public class WeatherInfoActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         finish();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.switch_city_button:
+                Intent intent = new Intent(this, AreaActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.refresh_button:
+                queryWeatherCode(county_code);
+        }
     }
 }
