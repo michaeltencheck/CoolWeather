@@ -50,6 +50,9 @@ public class WeatherInfoActivity extends AppCompatActivity implements View.OnCli
         Intent intent = getIntent();
         String county_name = intent.getStringExtra("county_name");
         county_code = intent.getStringExtra("county_code");
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sharedPreferences.edit().putString("county_code", county_code).commit();
         title.setText(county_name);
         queryWeatherCode(county_code);
 
@@ -159,7 +162,9 @@ public class WeatherInfoActivity extends AppCompatActivity implements View.OnCli
         switch (v.getId()) {
             case R.id.switch_city_button:
                 Intent intent = new Intent(this, AreaActivity.class);
+                intent.putExtra("from_switch_city", true);
                 startActivity(intent);
+                finish();
                 break;
             case R.id.refresh_button:
                 queryWeatherCode(county_code);

@@ -2,6 +2,9 @@ package com.example.test.myweather.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -53,6 +56,16 @@ public class AreaActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        boolean isFromSwitchCity = getIntent().getBooleanExtra("from_switch_city", false);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        if (sharedPreferences.getBoolean("seleted_county", false) && !isFromSwitchCity) {
+            Intent intent = new Intent(this, WeatherInfoActivity.class);
+            intent.putExtra("county_name", sharedPreferences.getString("city", ""));
+            intent.putExtra("county_code", sharedPreferences.getString("county_code", ""));
+            startActivity(intent);
+            finish();
+            return;
+        }
         setContentView(R.layout.activity_area);
 
         textView = (TextView) findViewById(R.id.area_title_textView);
@@ -107,6 +120,7 @@ public class AreaActivity extends AppCompatActivity implements AdapterView.OnIte
             intent.putExtra("county_name", seletedCounty.getCounty_name());
             intent.putExtra("county_code", seletedCounty.getCounty_code());
             startActivity(intent);
+            finish();
         }
     }
 

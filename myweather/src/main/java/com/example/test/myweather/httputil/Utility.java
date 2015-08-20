@@ -45,6 +45,7 @@ public class Utility {
         SharedPreferences.Editor editor =
                 PreferenceManager.getDefaultSharedPreferences(context).edit();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年M月d日", Locale.CHINA);
+        editor.putBoolean("seleted_county", true);
         editor.putString("current_date", simpleDateFormat.format(new Date()));
         editor.putString("city", city);
         editor.putString("cityId", cityId);
