@@ -1,5 +1,8 @@
 package com.example.test.myweather.httputil;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 
 import com.example.test.myweather.database.City;
@@ -14,6 +17,40 @@ import org.json.JSONObject;
  * Created by test on 8/18/2015.
  */
 public class Utility {
+    public static boolean handleWeatherInfo(Context context,String response) {
+        if (!TextUtils.isEmpty(response)) {
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                JSONObject weatherInfo = jsonObject.getJSONObject("weatherinfo");
+                String city = weatherInfo.getString("city");
+                String cityId = weatherInfo.getString("cityid");
+                String high_temp = weatherInfo.getString("temp1");
+                String low_temp = weatherInfo.getString("temp2");
+                String weather_des = weatherInfo.getString("weather");
+                String publish_time = weatherInfo.getString("ptime");
+                saveWeatherInfo(context,city,cityId,high_temp,low_temp,weather_des,publish_time);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private static void saveWeatherInfo
+            (Context context, String city, String cityId,
+             String high_temp, String low_temp, String weather_des, String publish_time) {
+        SharedPreferences.Editor editor =
+                PreferenceManager.getDefaultSharedPreferences(context).edit();
+        editor.putString("city", city);
+        editor.putString("cityId", cityId);
+        editor.putString("high_temp", high_temp);
+        editor.putString("low_temp", low_temp);
+        editor.putString("weather_des", weather_des);
+        editor.putString("publish_time", publish_time);
+        editor.commit();
+    }
+
     public synchronized static boolean handleProvince(MyWeatherDB myWeatherDB, String response) {
         if (!TextUtils.isEmpty(response)) {
             String[] allProvinces = response.split(",");

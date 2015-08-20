@@ -48,7 +48,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="50dp"
             android:layout_marginRight="30dp"
-            android:textSize="30sp"
+            android:textSize="38sp"
             tools:text="abc"/>
 
         <TextView
@@ -56,7 +56,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="abc"
-            android:textSize="30sp"
+            android:textSize="48sp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="100dp"/>
 
@@ -69,6 +69,15 @@
             android:textSize="80sp" />
 
         <TextView
+            android:id="@+id/temp_show_textView"
+            android:layout_marginTop="350dp"
+            android:layout_centerHorizontal="true"
+            android:textSize="48sp"
+            tools:text="aaa"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <!--<TextView-->
             android:id="@+id/low_temp_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -78,7 +87,7 @@
             tools:text="bbb"
             />
 
-        <TextView
+        <!--<TextView-->
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="~"
@@ -87,7 +96,7 @@
             android:textSize="38sp"
             />
 
-        <TextView
+        <!--<TextView-->
             android:id="@+id/high_temp_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
